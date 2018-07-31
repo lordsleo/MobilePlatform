@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="sendmessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="desaddr" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="msg" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="send_user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="send_system" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendmessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sendmessageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="sendmessageSoapIn">
+    <wsdl:part name="parameters" element="tns:sendmessage" />
+  </wsdl:message>
+  <wsdl:message name="sendmessageSoapOut">
+    <wsdl:part name="parameters" element="tns:sendmessageResponse" />
+  </wsdl:message>
+  <wsdl:portType name="mobileSoap">
+    <wsdl:operation name="sendmessage">
+      <wsdl:input message="tns:sendmessageSoapIn" />
+      <wsdl:output message="tns:sendmessageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="mobileSoap" type="tns:mobileSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendmessage">
+      <soap:operation soapAction="http://tempuri.org/sendmessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="mobileSoap12" type="tns:mobileSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendmessage">
+      <soap12:operation soapAction="http://tempuri.org/sendmessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="mobile">
+    <wsdl:port name="mobileSoap" binding="tns:mobileSoap">
+      <soap:address location="http://168.100.1.73/mobile/service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="mobileSoap12" binding="tns:mobileSoap12">
+      <soap12:address location="http://168.100.1.73/mobile/service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
